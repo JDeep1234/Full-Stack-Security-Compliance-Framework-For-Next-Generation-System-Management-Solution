@@ -97,8 +97,8 @@ export const cisControls: ComplianceControl[] = [
   },
 ];
 
-// Mock compliance frameworks
-export const mockFrameworks: ComplianceFramework[] = [
+
+export const Frameworks: ComplianceFramework[] = [
   {
     id: 'pci-dss',
     name: 'PCI-DSS',
@@ -145,8 +145,8 @@ export const mockFrameworks: ComplianceFramework[] = [
   }
 ];
 
-// Mock tool integrations
-export const mockTools: Tool[] = [
+
+export const Tools: Tool[] = [
   {
     id: 'lynis',
     name: 'Lynis',
@@ -239,8 +239,8 @@ export const mockTools: Tool[] = [
   }
 ];
 
-// Mock assessment data
-export const mockAssessments: Assessment[] = [
+//
+export const Assessments: Assessment[] = [
   {
     id: 'assessment-1',
     name: 'Monthly PCI-DSS Scan',
@@ -310,8 +310,8 @@ export const mockAssessments: Assessment[] = [
   }
 ];
 
-// Mock system information
-export const mockSystems: SystemInfo[] = [
+
+export const Systems: SystemInfo[] = [
   {
     id: 'hpc-cluster-1',
     name: 'Main HPC Cluster',
