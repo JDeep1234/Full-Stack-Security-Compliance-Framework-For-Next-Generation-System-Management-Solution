@@ -9,7 +9,7 @@ import {
   ToolStatus
 } from '../types/compliance';
 
-// Mock NIST Controls for demonstration
+
 export const nistControls: ComplianceControl[] = [
   {
     id: 'AC-1',
