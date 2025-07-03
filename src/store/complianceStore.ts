@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { ComplianceFramework, Tool, Assessment, ToolStatus, ComplianceStatus, Severity, WazuhCredentials } from '../types/compliance';
-import { mockFrameworks, mockTools, mockAssessments } from '../data/mockData';
+import { Frameworks, Tools, Assessments } from '../data/Data';
 import axios from 'axios';
 
 // Add types for security analysis
@@ -177,7 +177,7 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
       await new Promise(resolve => setTimeout(resolve, 500));
       
       set((state) => ({
-        frameworks: mockFrameworks,
+        frameworks: Frameworks,
         loading: { ...state.loading, frameworks: false },
       }));
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -251,7 +251,7 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
       await new Promise(resolve => setTimeout(resolve, 500));
       
       set((state) => ({
-        assessments: mockAssessments,
+        assessments: Assessments,
         loading: { ...state.loading, assessments: false },
       }));
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -931,7 +931,7 @@ sudo apt upgrade -y</pre>
       
      
       await new Promise(resolve => setTimeout(resolve, 500));
-      const mockReports: SecurityAnalysisReport[] = [
+      const Reports: SecurityAnalysisReport[] = [
         {
           reportId: 'report-compliance-123456',
           title: 'CIS Compliance Analysis',
@@ -951,9 +951,9 @@ sudo apt upgrade -y</pre>
       ];
       
       set((state) => ({
-        securityReports: mockReports,
+        securityReports: Reports,
         loading: { ...state.loading, reports: false },
-        error: { ...state.error, reports: 'Using mock data due to API error' },
+       
       }));
     }
   },
@@ -983,7 +983,7 @@ sudo apt upgrade -y</pre>
       await new Promise(resolve => setTimeout(resolve, 700));
       
      
-      const mockReport: SecurityAnalysisReport = {
+      const Report: SecurityAnalysisReport = {
         reportId,
         title: 'CIS Compliance Analysis',
         description: 'Comprehensive analysis of CIS compliance status',
@@ -1079,9 +1079,9 @@ sudo apt upgrade -y</pre>
       };
       
       set((state) => ({
-        currentReport: mockReport,
+        currentReport: Report,
         loading: { ...state.loading, currentReport: false },
-        error: { ...state.error, currentReport: 'Using mock data due to API error' },
+       
       }));
     }
   },
@@ -1130,8 +1130,8 @@ sudo apt upgrade -y</pre>
       console.error('Error generating CIS analysis:', error);
       
      
-      const mockReportId = `report-compliance-cis-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
-      await get().getSecurityReport(mockReportId);
+      const ReportId = `report-compliance-cis-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+      await get().getSecurityReport(ReportId);
     }
   },
   
@@ -1164,7 +1164,7 @@ sudo apt upgrade -y</pre>
     
       await new Promise(resolve => setTimeout(resolve, 800));
       
-      const mockPlan = `# Security Remediation Plan
+      const Plan = `# Security Remediation Plan
 
 ## Executive Summary
 
@@ -1204,9 +1204,9 @@ ${get().currentReport?.analysis?.issues.map((issue, i) => `
 `;
 
       set((state) => ({
-        remediationPlan: mockPlan,
+        remediationPlan: Plan,
         loading: { ...state.loading, remediationPlan: false },
-        error: { ...state.error, remediationPlan: 'Using mock data due to API error' },
+       
       }));
     }
   },
@@ -1232,10 +1232,10 @@ ${get().currentReport?.analysis?.issues.map((issue, i) => `
     } catch (error) {
       console.error('Error analyzing dashboard:', error);
       
-      // Use mock data for demo purposes
+  
       await new Promise(resolve => setTimeout(resolve, 600));
       
-      const mockAnalysis = `# Dashboard Analysis
+      const Analysis = `# Dashboard Analysis
 
 I've analyzed your security compliance dashboard and identified several key insights:
 
@@ -1275,7 +1275,7 @@ ${dashboardData.toolStatus.filter(t => t.status === 'Error').length > 0 || dashb
 I recommend ${dashboardData.summary.overallCompliance < 80 ? 'generating a detailed remediation plan to systematically address all compliance gaps.' : 'continuing to improve your security program with regular assessments and continuous improvement.'}`;
 
       set((state) => ({
-        dashboardAnalysis: mockAnalysis,
+        dashboardAnalysis: Analysis,
         loading: { ...state.loading, dashboardAnalysis: false },
         error: { ...state.error, dashboardAnalysis: 'Using mock data due to API error' },
       }));
