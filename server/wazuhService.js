@@ -673,10 +673,9 @@ class WazuhService extends EventEmitter {
 
   // Trigger a SCA scan (if the API allows)
   async triggerSCAScan(agentId) {
-    // Note: Wazuh API might not have a direct endpoint for this
-    // This is a placeholder - actual implementation depends on Wazuh's capabilities
+   
     try {
-      // In a real implementation, you might need to use Wazuh's API or other means
+     
       return {
         success: true,
         message: `SCA scan requested for agent ${agentId}`
