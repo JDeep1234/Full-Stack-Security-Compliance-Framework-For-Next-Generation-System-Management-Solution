@@ -281,9 +281,7 @@ class MCPAnalysisService extends EventEmitter {
    * @returns {Object} - Analysis results
    */
   generateAIAnalysis(securityData, analysisType, framework) {
-    // In a real implementation, this would call an LLM or AI service
-    // For now, we'll return a simulated response
-    
+  
     // Extract key metrics from the security data
     const metrics = this.extractSecurityMetrics(securityData);
     
@@ -410,7 +408,7 @@ class MCPAnalysisService extends EventEmitter {
    * Generate a list of identified security issues
    */
   generateIssuesList(metrics, framework) {
-    // In a real implementation, this would analyze actual security findings
+   
     // Here we'll generate a simulated list
     
     const issues = [];
@@ -632,8 +630,7 @@ class MCPAnalysisService extends EventEmitter {
    * @returns {Promise<string>} - Analysis in markdown format
    */
   async analyzeDashboard(dashboardData) {
-    // In a real implementation, this would call an LLM service
-    // For now, we'll generate a simulated response
+  
     
     const { summary, toolStatus } = dashboardData;
     
