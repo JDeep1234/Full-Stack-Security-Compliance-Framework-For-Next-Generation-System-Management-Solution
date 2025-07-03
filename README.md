@@ -1,4 +1,4 @@
-# 🛡️ HPC Security Compliance Framework
+# Full stack Security Compliance framework for Next Generation System Management Solution
 
 A comprehensive, full-stack security compliance monitoring and reporting platform designed specifically for High-Performance Computing (HPC) environments. This framework integrates multiple security tools and provides real-time monitoring, compliance assessment, and detailed reporting capabilities.
 
