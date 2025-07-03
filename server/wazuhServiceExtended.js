@@ -314,7 +314,7 @@ class WazuhServiceExtended {
           count: reports.length,
           latest: reports.length > 0 ? reports[0] : null
         },
-        // Add more useful fields
+      
         statusSummary: {
           active: agent.status === 'active',
           lastKeepAlive: agent.lastKeepAlive,
