@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { ComplianceFramework, Tool, Assessment, ToolStatus, ComplianceStatus, Severity, WazuhCredentials } from '../types/compliance';
-import { Frameworks, Tools, Assessments } from '../data/Data';
+import { Frameworks, Tools, Assessments } from '../Data';
 import axios from 'axios';
 
 // Add types for security analysis
