@@ -173,11 +173,7 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
     }));
     
     try {
-      // In a real app, this would be an API call
-      // const response = await fetch('/api/frameworks');
-      // const data = await response.json();
       
-      // Using mock data for now
       await new Promise(resolve => setTimeout(resolve, 500));
       
       set((state) => ({
@@ -200,10 +196,10 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
     }));
     
     try {
-      // In a real app, this would be an API call
+    
       await new Promise(resolve => setTimeout(resolve, 500));
       
-      // Add Wazuh to the tools list if it's not already there
+     
       const wazuhTool = {
         id: 'wazuh',
         name: 'Wazuh',
@@ -215,12 +211,12 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
         lastRun: get().wazuhCredentials ? new Date().toISOString() : null
       };
       
-      // Find if Wazuh exists in the tools array
+    
       const tools = [...mockTools];
       const wazuhIndex = tools.findIndex(tool => tool.id === 'wazuh');
       
       if (wazuhIndex >= 0) {
-        // Update existing Wazuh entry
+       
         tools[wazuhIndex] = {
           ...tools[wazuhIndex],
           status: get().wazuhCredentials ? 'active' as ToolStatus : 'inactive' as ToolStatus,
@@ -251,7 +247,7 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
     }));
     
     try {
-      // In a real app, this would be an API call
+    
       await new Promise(resolve => setTimeout(resolve, 500));
       
       set((state) => ({
@@ -269,7 +265,7 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
   
   addCustomFramework: async (framework) => {
     try {
-      // In a real app, this would be an API call
+    
       await new Promise(resolve => setTimeout(resolve, 300));
       
       const newFramework: ComplianceFramework = {
@@ -291,7 +287,7 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
   
   addTool: async (tool) => {
     try {
-      // In a real app, this would be an API call
+     
       await new Promise(resolve => setTimeout(resolve, 300));
       
       const newTool: Tool = {
@@ -313,7 +309,7 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
   
   scheduleAssessment: async (assessment) => {
     try {
-      // In a real app, this would be an API call
+      
       await new Promise(resolve => setTimeout(resolve, 300));
       
       const newAssessment: Assessment = {
@@ -478,17 +474,10 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
     }));
 
     try {
-      // In a real app, this would make an API call to run OpenSCAP
-      // The sequence of commands would be:
-      // 1. wget https://security-metadata.canonical.com/oval/com.ubuntu.$(lsb_release -cs).usn.oval.xml.bz2
-      // 2. bzip2 -d com.ubuntu.$(lsb_release -cs).usn.oval.xml.bz2
-      // 3. oscap oval eval --report oval-$(lsb_release -cs).html com.ubuntu.$(lsb_release -cs).usn.oval.xml
-      // 4. xdg-open oval-$(lsb_release -cs).html (if in desktop environment)
-      
-      // For the demo, we'll simulate the scan with mock data
+     
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Raw output from running the commands as it would appear in the terminal
+   
       const rawOvalOutput = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -795,7 +784,7 @@ sudo apt upgrade -y</pre>
 
   activateTool: async (toolId: string) => {
     try {
-      // In a real app, this would be an API call to activate the tool
+    
       await new Promise(resolve => setTimeout(resolve, 800));
       
       const currentTools = get().tools;
@@ -940,7 +929,7 @@ sudo apt upgrade -y</pre>
     } catch (error) {
       console.error('Error fetching security reports:', error);
       
-      // For demo purposes, use mock data
+     
       await new Promise(resolve => setTimeout(resolve, 500));
       const mockReports: SecurityAnalysisReport[] = [
         {
@@ -990,10 +979,10 @@ sudo apt upgrade -y</pre>
     } catch (error) {
       console.error(`Error fetching security report ${reportId}:`, error);
       
-      // For demo purposes, use mock data
+    
       await new Promise(resolve => setTimeout(resolve, 700));
       
-      // Generate a mock report with more detailed data
+     
       const mockReport: SecurityAnalysisReport = {
         reportId,
         title: 'CIS Compliance Analysis',
@@ -1140,7 +1129,7 @@ sudo apt upgrade -y</pre>
     } catch (error) {
       console.error('Error generating CIS analysis:', error);
       
-      // Use mock data for demo purposes
+     
       const mockReportId = `report-compliance-cis-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
       await get().getSecurityReport(mockReportId);
     }
@@ -1172,7 +1161,7 @@ sudo apt upgrade -y</pre>
     } catch (error) {
       console.error('Error generating remediation plan:', error);
       
-      // Use mock data for demo purposes
+    
       await new Promise(resolve => setTimeout(resolve, 800));
       
       const mockPlan = `# Security Remediation Plan
