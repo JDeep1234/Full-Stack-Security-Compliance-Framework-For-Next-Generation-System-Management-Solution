@@ -59,4 +59,4 @@ server/.env
 Thumbs.db
 desktop.ini 
 
-credentials.json
+server/data/wazuh/credentials.json
