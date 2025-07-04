@@ -58,3 +58,5 @@ server/.env
 # Optional: OS specific files
 Thumbs.db
 desktop.ini 
+
+credntials.json
