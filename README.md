@@ -161,35 +161,111 @@ brew install lynis
 ## 📁 Project Structure
 
 ```
-wazuh-isolated/
-├── 📁 public/                    # Static assets
-├── 📁 server/                    # Express.js backend
-│   ├── server.js                 # Main server file
-│   ├── wazuhService.js          # Wazuh API integration
-│   ├── lynisService.js          # Lynis tool integration
-│   └── package.json             # Backend dependencies
-├── 📁 src/                       # React frontend source
-│   ├── 📁 components/           # Reusable React components
-│   │   ├── 📁 wazuh/           # Wazuh-specific components
-│   │   │   ├── ComplianceOverview.tsx    # Compliance dashboard & HTML export
-│   │   │   ├── ProcessesTable.tsx       # Running processes display
-│   │   │   ├── PortsTable.tsx           # Network ports monitoring
-│   │   │   ├── SystemInformation.tsx    # System details & file integrity
-│   │   │   └── AgentSelector.tsx        # Agent selection interface
-│   │   └── 📁 ui/              # Common UI components
-│   ├── 📁 pages/               # Page components
-│   │   ├── WazuhResult.tsx     # Main Wazuh dashboard
-│   │   ├── ToolIntegrations.tsx # Tool configuration page
-│   │   └── Dashboard.tsx       # Main application dashboard
-│   ├── 📁 store/               # Zustand state management
-│   ├── 📁 types/               # TypeScript type definitions
-│   ├── App.tsx                 # Main application component
-│   └── main.tsx               # Application entry point
-├── package.json               # Frontend dependencies & scripts
-├── tailwind.config.js        # Tailwind CSS configuration
-├── tsconfig.json            # TypeScript configuration
-├── vite.config.ts          # Vite build configuration
-└── README.md              # This file
+HPE-CTY-Project/
+├── final/
+│   ├── .git/                              # Git repository
+│   ├── .gitignore                         # Git ignore file
+│   ├── README.md                          # Project documentation
+│   ├── index.html                         # Main HTML entry point
+│   ├── package.json                       # Frontend dependencies
+│   ├── package-lock.json                  # Lock file for dependencies
+│   ├── spec.yaml                          # API specification
+│   │
+│   ├── Configuration Files/
+│   │   ├── eslint.config.js               # ESLint configuration
+│   │   ├── postcss.config.js              # PostCSS configuration
+│   │   ├── tailwind.config.js             # Tailwind CSS configuration
+│   │   ├── tsconfig.json                  # TypeScript configuration
+│   │   ├── tsconfig.app.json              # TypeScript app configuration
+│   │   ├── tsconfig.node.json             # TypeScript node configuration
+│   │   └── vite.config.ts                 # Vite build configuration
+│   │
+│   ├── public/                            # Static assets
+│   │   └── shield-icon.svg                # Application icon
+│   │
+│   ├── src/                               # Frontend source code
+│   │   ├── App.tsx                        # Main React component
+│   │   ├── main.tsx                       # Application entry point
+│   │   ├── index.css                      # Global styles
+│   │   ├── vite-env.d.ts                  # Vite environment types
+│   │   │
+│   │   ├── components/                    # Reusable React components
+│   │   │   ├── dashboard/                 # Dashboard-specific components
+│   │   │   │   ├── ComplianceSummary.tsx  # Compliance overview widget
+│   │   │   │   ├── RecentAssessments.tsx  # Recent assessments widget
+│   │   │   │   ├── ThreatSummary.tsx      # Threat summary widget
+│   │   │   │   └── ToolStatus.tsx         # Tool status widget
+│   │   │   │
+│   │   │   ├── layout/                    # Layout components
+│   │   │   │   ├── Header.tsx             # Application header
+│   │   │   │   ├── Layout.tsx             # Main layout wrapper
+│   │   │   │   └── Sidebar.tsx            # Navigation sidebar
+│   │   │   │
+│   │   │   └── wazuh/                     # Wazuh integration components
+│   │   │       ├── AgentMetrics.tsx       # Agent metrics display
+│   │   │       ├── AgentSelector.tsx      # Agent selection component
+│   │   │       ├── ComplianceOverview.tsx # Compliance overview
+│   │   │       ├── PortsTable.tsx         # Network ports table
+│   │   │       ├── ProcessesTable.tsx     # Running processes table
+│   │   │       ├── SCAResults.tsx         # Security Configuration Assessment
+│   │   │       ├── SystemInformation.tsx  # System information display
+│   │   │       └── *.json                 # Sample data files
+│   │   │
+│   │   ├── data/                          # Static data and mock data
+│   │   │   └── mockData.ts                # Mock data for development
+│   │   │
+│   │   ├── pages/                         # Page components
+│   │   │   ├── Dashboard.tsx              # Main dashboard page
+│   │   │   ├── HistoricalData.tsx         # Historical data analysis
+│   │   │   ├── NotFound.tsx               # 404 error page
+│   │   │   ├── OpenSCAPReport.tsx         # OpenSCAP reporting
+│   │   │   ├── ScheduledAssessments.tsx   # Assessment scheduling
+│   │   │   ├── Settings.tsx               # Application settings
+│   │   │   ├── ToolIntegrations.tsx       # Security tool integrations
+│   │   │   ├── WazuhConfig.tsx            # Wazuh configuration
+│   │   │   ├── WazuhResult.tsx            # Wazuh results display
+│   │   │   ├── AssessmentResults.tsx      # Assessment results
+│   │   │   ├── ComplianceFrameworks.tsx   # Compliance frameworks
+│   │   │   ├── CustomFrameworks.tsx       # Custom framework creation
+│   │   │   └── [legacy files]             # Development iterations
+│   │   │
+│   │   ├── store/                         # State management
+│   │   │   ├── appStore.ts                # Application state store
+│   │   │   └── complianceStore.ts         # Compliance data store
+│   │   │
+│   │   └── types/                         # TypeScript type definitions
+│   │       └── compliance.ts              # Compliance-related types
+│   │
+│   ├── server/                            # Backend server
+│   │   ├── package.json                   # Server dependencies
+│   │   ├── package-lock.json              # Server lock file
+│   │   ├── server.js                      # Express server main file
+│   │   ├── wazuhService.js                # Wazuh API integration service
+│   │   ├── lynisService.js                # Lynis security audit service
+│   │   │
+│   │   ├── data/                          # Server data storage
+│   │   │   └── wazuh/                     # Wazuh data files
+│   │   │       ├── 000_network_ports.json # Network ports data
+│   │   │       ├── 000_system_info.json  # System information
+│   │   │       └── data/                  # Historical data files
+│   │   │           └── *.json             # Timestamped data files
+│   │   │
+│   │   ├── reports/                       # Generated reports
+│   │   │   └── wazuh-security-report-*.html # Wazuh security reports
+│   │   │
+│   │   └── lynisReports/                  # Lynis audit reports
+│   │       └── report.json                # Lynis report data
+│   │
+│   ├── research/                          # Research and documentation
+│   │   ├── Healthcare-sector.md           # Healthcare compliance research
+│   │   ├── banking-sector-compliance.md   # Banking sector compliance
+│   │   ├── defence-sector.md              # Defense sector requirements
+│   │   ├── hpc.md                         # High-Performance Computing
+│   │   └── telecom-security-compliance.md # Telecom security standards
+│   │
+│   └── Documentation/                     # Project documentation
+│       ├── Report.pdf                     # Project report
+│       └── Final_Presentation.pdf         # Final presentation
 ```
 
 ## 🔍 Features Deep Dive
