@@ -69,8 +69,8 @@ A comprehensive, full-stack security compliance monitoring and reporting platfor
 
 1. **Clone the repository:**
 ```bash
-git clone https://github.com/BipinRajC/SecureHPC
-cd wazuh-isolated
+git clone https://github.com/JDeep1234/Full-Stack-Security-Compliance-Framework-For-Next-Generation-System-Management-Solution.git your-repo-name
+cd your-repo-name
 ```
 
 2. **Install frontend dependencies:**
