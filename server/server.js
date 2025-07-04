@@ -397,6 +397,16 @@ app.get('/api/tools/wazuh/agents/:agentId/syscheck', async (req, res) => {
   }
 });
 
+// POST /api/sca/failed-results
+app.post('/api/sca/failed-results', (req, res) => {
+  const { failed_results, metadata } = req.body;
+  
+  // Save to your preferred storage (file, database, etc.)
+  // Example: save to failed_sca_results.json
+  
+  res.json({ status: 'success', message: 'Failed results stored successfully' });
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

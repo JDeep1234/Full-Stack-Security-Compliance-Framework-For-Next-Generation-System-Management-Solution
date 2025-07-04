@@ -178,35 +178,6 @@ export const mockTools: Tool[] = [
     lastRun: null
   },
   {
-    id: 'prowler',
-    name: 'Prowler',
-    description: 'Open source security tool to perform AWS security best practices assessments, audits, incident response, and compliance.',
-    type: 'auditor',
-    status: 'inactive',
-    version: '3.0.0',
-    supportedFrameworks: ['cis-controls'],
-    configOptions: [
-      {
-        name: 'aws_region',
-        type: 'text',
-        required: true,
-        defaultValue: 'us-east-1'
-      },
-      {
-        name: 'aws_profile',
-        type: 'text',
-        required: false
-      },
-      {
-        name: 'compliance_framework',
-        type: 'select',
-        required: true,
-        options: ['cis', 'hipaa', 'gdpr', 'all'],
-        defaultValue: 'cis'
-      }
-    ]
-  },
-  {
     id: 'custom-scanner',
     name: 'HPC Custom Scanner',
     description: 'Custom-built security scanner for HPC environments.',

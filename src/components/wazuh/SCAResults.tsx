@@ -15,6 +15,31 @@ interface SCAResultsProps {
   agent: any;
 }
 
+interface SCARule {
+  id: number;
+  rule_id: string;
+  title: string;
+  description: string;
+  rationale?: string;
+  remediation?: string;
+  compliance?: Array<{ requirement: string; value: string }>;
+  severity: string;
+  result: string;
+  agent_id?: string;
+  policy_id?: string;
+  timestamp?: string;
+}
+
+interface FailedResult {
+  agent_id: string;
+  agent_name?: string;
+  policy_id: string;
+  policy_name?: string;
+  rule: SCARule;
+  timestamp: string;
+  last_updated: string;
+}
+
 const SCAResults: React.FC<SCAResultsProps> = ({ agent }) => {
   const [selectedPolicy, setSelectedPolicy] = useState<any>(null);
   const [policyResults, setPolicyResults] = useState<any[]>([]);
@@ -42,11 +67,136 @@ const SCAResults: React.FC<SCAResultsProps> = ({ agent }) => {
     }
   }, [selectedPolicy, agent]);
 
+  // Store failed results via API call
+  const storeFailedResults = async (failedRules: SCARule[]) => {
+    if (failedRules.length === 0) return;
+
+    try {
+      // Create failed results entries
+      const failedResults: FailedResult[] = failedRules.map(rule => ({
+        agent_id: agent?.info?.id || 'unknown',
+        agent_name: agent?.info?.name || agent?.info?.ip || 'Unknown Agent',
+        policy_id: selectedPolicy?.policy_id || 'unknown',
+        policy_name: selectedPolicy?.name || 'Unknown Policy',
+        rule: {
+          ...rule,
+          agent_id: agent?.info?.id,
+          policy_id: selectedPolicy?.policy_id,
+          timestamp: new Date().toISOString()
+        },
+        timestamp: new Date().toISOString(),
+        last_updated: new Date().toISOString()
+      }));
+
+      // Send to backend API for storage
+      try {
+        await axios.post('http://localhost:3001/api/sca/failed-results', {
+          failed_results: failedResults,
+          metadata: {
+            agent_id: agent?.info?.id,
+            policy_id: selectedPolicy?.policy_id,
+            total_failed: failedResults.length,
+            timestamp: new Date().toISOString()
+          }
+        });
+        
+        console.log(`Successfully stored ${failedResults.length} failed SCA results for agent ${agent?.info?.id}`);
+      } catch (apiError) {
+        console.error('Failed to store results via API, falling back to local storage:', apiError);
+        
+        // Fallback: Store in browser's localStorage as JSON
+        storeFailedResultsLocally(failedResults);
+      }
+
+    } catch (error) {
+      console.error('Error preparing failed results for storage:', error);
+    }
+  };
+
+  // Fallback method: Store failed results in localStorage
+  const storeFailedResultsLocally = (failedResults: FailedResult[]) => {
+    try {
+      const storageKey = 'sca_failed_results';
+      
+      // Get existing data from localStorage
+      const existingDataStr = localStorage.getItem(storageKey);
+      let existingData: { metadata: any; failed_results: FailedResult[] } = {
+        metadata: {
+          created: new Date().toISOString(),
+          last_updated: new Date().toISOString(),
+          total_failed_results: 0
+        },
+        failed_results: []
+      };
+
+      if (existingDataStr) {
+        try {
+          existingData = JSON.parse(existingDataStr);
+        } catch (parseError) {
+          console.error('Error parsing existing localStorage data:', parseError);
+        }
+      }
+
+      // Remove existing entries for the same agent and policy to avoid duplicates
+      const filteredExistingResults = existingData.failed_results.filter(
+        (result: FailedResult) => 
+          !(result.agent_id === agent?.info?.id && result.policy_id === selectedPolicy?.policy_id)
+      );
+
+      // Combine filtered existing results with new results
+      const updatedFailedResults = [...filteredExistingResults, ...failedResults];
+
+      // Update the data structure
+      const updatedData = {
+        metadata: {
+          ...existingData.metadata,
+          last_updated: new Date().toISOString(),
+          total_failed_results: updatedFailedResults.length
+        },
+        failed_results: updatedFailedResults
+      };
+
+      // Store back to localStorage
+      localStorage.setItem(storageKey, JSON.stringify(updatedData, null, 2));
+      
+      console.log(`Stored ${failedResults.length} failed SCA results locally for agent ${agent?.info?.id}`);
+      
+      // Also create a downloadable JSON file
+      createDownloadableJSON(updatedData);
+      
+    } catch (error) {
+      console.error('Error storing failed results in localStorage:', error);
+    }
+  };
+
+  // Create a downloadable JSON file
+  const createDownloadableJSON = (data: any) => {
+    try {
+      const jsonStr = JSON.stringify(data, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      
+      // Create a temporary download link
+      const downloadLink = document.createElement('a');
+      downloadLink.href = url;
+      downloadLink.download = `failed_sca_results_${new Date().toISOString().split('T')[0]}.json`;
+      
+      // Store the download link in a global variable so it can be accessed if needed
+      (window as any).scaDownloadLink = downloadLink;
+      
+      console.log('JSON file ready for download. Access via window.scaDownloadLink.click()');
+    } catch (error) {
+      console.error('Error creating downloadable JSON:', error);
+    }
+  };
+
   // Fetch SCA results for a specific policy
   const fetchPolicyResults = async (agentId: string, policyId: string) => {
     try {
       setLoading(true);
       setError(null);
+
+      let results: SCARule[] = [];
 
       // In a real app, we would fetch from the backend
       // For demo purposes, we'll generate some mock data if the API call fails
@@ -56,15 +206,24 @@ const SCAResults: React.FC<SCAResultsProps> = ({ agent }) => {
         );
         
         if (response.data.status === 'ok' && response.data.data && response.data.data.data) {
-          setPolicyResults(response.data.data.data.affected_items || []);
+          results = response.data.data.data.affected_items || [];
         } else {
           throw new Error('Invalid response format');
         }
       } catch (apiError) {
         console.error('API error, using mock data:', apiError);
         // Generate mock data
-        generateMockResults(policyId);
+        results = generateMockResults(policyId);
       }
+
+      setPolicyResults(results);
+
+      // Store failed results
+      const failedResults = results.filter(rule => rule.result === 'failed');
+      if (failedResults.length > 0) {
+        await storeFailedResults(failedResults);
+      }
+
     } catch (error: any) {
       console.error('Error fetching policy results:', error);
       setError(error.message || 'Failed to fetch policy results');
@@ -74,8 +233,8 @@ const SCAResults: React.FC<SCAResultsProps> = ({ agent }) => {
   };
 
   // Generate mock SCA results for demo purposes
-  const generateMockResults = (policyId: string) => {
-    const mockRules = [];
+  const generateMockResults = (policyId: string): SCARule[] => {
+    const mockRules: SCARule[] = [];
     const severityOptions = ['critical', 'high', 'medium', 'low'];
     const resultOptions = ['passed', 'failed', 'not_applicable'];
     
@@ -112,7 +271,31 @@ const SCAResults: React.FC<SCAResultsProps> = ({ agent }) => {
       });
     }
     
-    setPolicyResults(mockRules);
+    return mockRules;
+  };
+
+  // Utility function to download the failed results JSON file
+  const downloadFailedResults = () => {
+    if ((window as any).scaDownloadLink) {
+      (window as any).scaDownloadLink.click();
+    } else {
+      // Get data from localStorage and create download
+      const storageKey = 'sca_failed_results';
+      const existingDataStr = localStorage.getItem(storageKey);
+      if (existingDataStr) {
+        try {
+          const data = JSON.parse(existingDataStr);
+          createDownloadableJSON(data);
+          setTimeout(() => {
+            if ((window as any).scaDownloadLink) {
+              (window as any).scaDownloadLink.click();
+            }
+          }, 100);
+        } catch (error) {
+          console.error('Error preparing download:', error);
+        }
+      }
+    }
   };
 
   // Toggle expanded state for an item
@@ -207,7 +390,18 @@ const SCAResults: React.FC<SCAResultsProps> = ({ agent }) => {
   return (
     <div className="card h-full">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
-        <h2 className="text-lg font-medium text-white mb-2 sm:mb-0">Security Configuration Assessment</h2>
+        <div className="flex items-center space-x-3">
+          <h2 className="text-lg font-medium text-white mb-2 sm:mb-0">Security Configuration Assessment</h2>
+          {failCount > 0 && (
+            <button
+              onClick={downloadFailedResults}
+              className="px-3 py-1 text-xs bg-error-900 text-error-300 border border-error-800 rounded hover:bg-error-800 transition-colors"
+              title="Download failed results as JSON"
+            >
+              Download Failed ({failCount})
+            </button>
+          )}
+        </div>
         
         {agent?.sca?.length > 0 && (
           <div className="relative inline-block text-left">
@@ -411,4 +605,4 @@ const SCAResults: React.FC<SCAResultsProps> = ({ agent }) => {
   );
 };
 
-export default SCAResults; 
+export default SCAResults;

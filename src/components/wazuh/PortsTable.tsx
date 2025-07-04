@@ -1,11 +1,77 @@
-import React from 'react';
-import { WifiIcon, ShieldAlert, Globe } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { WifiIcon, ShieldAlert, Globe, Download } from 'lucide-react';
 
 interface PortsTableProps {
   ports: any[];
 }
 
 const PortsTable: React.FC<PortsTableProps> = ({ ports }) => {
+  const previousPortsRef = useRef<string>('');
+
+  // Function to save ports data as JSON
+  const savePortsToJSON = (portsData: any[]) => {
+    const jsonData = {
+      timestamp: new Date().toISOString(),
+      totalPorts: portsData.length,
+      ports: portsData.map(port => ({
+        local: {
+          port: port.local?.port || null,
+          ip: port.local?.ip || null
+        },
+        remote: {
+          port: port.remote?.port || null,
+          ip: port.remote?.ip || null
+        },
+        protocol: port.protocol || null,
+        state: port.state || null,
+        process: {
+          name: port.process?.name || null,
+          pid: port.process?.pid || null
+        },
+        service: getServiceName(port.local?.port, port.protocol),
+        securityLevel: getSecurityLevel(port.local?.port, port.protocol, port.state)
+      }))
+    };
+
+    // Create and download JSON file
+    const jsonString = JSON.stringify(jsonData, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `network_ports_${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  // Monitor ports data changes and save to JSON automatically
+  useEffect(() => {
+    if (ports && ports.length > 0) {
+      const currentPortsString = JSON.stringify(ports);
+      
+      // Only save if ports data has changed
+      if (currentPortsString !== previousPortsRef.current) {
+        previousPortsRef.current = currentPortsString;
+        // Auto-save after a short delay to avoid too frequent saves
+        const timeoutId = setTimeout(() => {
+          savePortsToJSON(ports);
+        }, 1000);
+        
+        return () => clearTimeout(timeoutId);
+      }
+    }
+  }, [ports]);
+
+  // Manual export function
+  const handleManualExport = () => {
+    if (ports && ports.length > 0) {
+      savePortsToJSON(ports);
+    }
+  };
+
   if (!ports || ports.length === 0) {
     return (
       <div className="card h-full">
@@ -75,9 +141,19 @@ const PortsTable: React.FC<PortsTableProps> = ({ ports }) => {
 
   return (
     <div className="card h-full">
-      <div className="flex items-center mb-4">
-        <WifiIcon className="h-5 w-5 text-primary-500 mr-2" />
-        <h2 className="text-lg font-medium text-white">Open Network Ports</h2>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center">
+          <WifiIcon className="h-5 w-5 text-primary-500 mr-2" />
+          <h2 className="text-lg font-medium text-white">Open Network Ports</h2>
+        </div>
+        <button
+          onClick={handleManualExport}
+          className="flex items-center px-3 py-1 bg-primary-600 hover:bg-primary-700 text-white text-sm rounded-md transition-colors"
+          title="Export all ports data to JSON"
+        >
+          <Download className="h-4 w-4 mr-1" />
+          Export JSON
+        </button>
       </div>
       
       <div className="overflow-x-auto">
@@ -146,12 +222,13 @@ const PortsTable: React.FC<PortsTableProps> = ({ ports }) => {
           <Globe className="h-4 w-4 mr-1" />
           <span>Top 20 ports shown</span>
           {ports.length > 20 && (
-            <span className="ml-2 text-neutral-400">({ports.length} total - export HTML for complete data)</span>
+            <span className="ml-2 text-neutral-400">({ports.length} total)</span>
           )}
+          <span className="ml-4 text-green-400">● Auto-saving JSON</span>
         </div>
       </div>
     </div>
   );
 };
 
-export default PortsTable; 
+export default PortsTable;

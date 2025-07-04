@@ -45,6 +45,13 @@ export interface Tool {
   version: string;
   supportedFrameworks: string[];
   lastRun: string | null;
+  configOptions?: {
+    name: string;
+    type: 'text' | 'select' | 'boolean';
+    required: boolean;
+    defaultValue?: string | boolean;
+    options?: string[];
+  }[];
 }
 
 export interface Assessment {

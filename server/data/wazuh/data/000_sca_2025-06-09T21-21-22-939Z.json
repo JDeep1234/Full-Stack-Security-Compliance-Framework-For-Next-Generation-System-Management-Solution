@@ -1,0 +1,30 @@
+{
+  "timestamp": "2025-06-09T21-21-22-939Z",
+  "agentId": "000",
+  "dataType": "sca",
+  "data": {
+    "data": {
+      "affected_items": [
+        {
+          "description": "This document provides prescriptive guidance for establishing a secure configuration posture for Ubuntu Linux 22.04 LTS based on CIS benchmark for Ubuntu Linux 22.04 LTS.",
+          "policy_id": "cis_ubuntu22-04",
+          "name": "CIS Ubuntu Linux 22.04 LTS Benchmark v2.0.0.",
+          "fail": 101,
+          "start_scan": "2025-06-09T21:12:05+00:00",
+          "pass": 76,
+          "end_scan": "2025-06-09T21:12:05+00:00",
+          "invalid": 30,
+          "hash_file": "2d2bd09c7c2c3e83f1bcc674f8ee8a77fe21a8ab6141445f5cf494f36d28e3c7",
+          "references": "https://www.cisecurity.org/cis-benchmarks/",
+          "score": 42,
+          "total_checks": 207
+        }
+      ],
+      "total_affected_items": 1,
+      "total_failed_items": 0,
+      "failed_items": []
+    },
+    "message": "All selected SCA information was returned",
+    "error": 0
+  }
+}
