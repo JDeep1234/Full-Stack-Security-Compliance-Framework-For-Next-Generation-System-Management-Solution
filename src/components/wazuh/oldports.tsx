@@ -54,7 +54,6 @@ const PortsTable: React.FC<PortsTableProps> = ({ ports }) => {
 
   // Determine security risk level
   const getSecurityLevel = (port: number, protocol: string, state: string): string => {
-    // This is a simple heuristic - a real implementation would be more sophisticated
     if (port < 1024 && state === 'listening') {
       if ([22, 443, 80, 53].includes(port)) {
         return 'normal'; // Common services
@@ -64,7 +63,7 @@ const PortsTable: React.FC<PortsTableProps> = ({ ports }) => {
       }
     }
     
-    // Ephemeral ports are usually outgoing connections
+    
     if (port >= 32768 && port <= 65535) {
       return 'normal';
     }

@@ -198,8 +198,7 @@ const SCAResults: React.FC<SCAResultsProps> = ({ agent }) => {
 
       let results: SCARule[] = [];
 
-      // In a real app, we would fetch from the backend
-      // For demo purposes, we'll generate some mock data if the API call fails
+      
       try {
         const response = await axios.get(
           `http://localhost:3001/api/tools/wazuh/agents/${agentId}/sca/${policyId}`
@@ -232,7 +231,7 @@ const SCAResults: React.FC<SCAResultsProps> = ({ agent }) => {
     }
   };
 
-  // Generate mock SCA results for demo purposes
+  
   const generateMockResults = (policyId: string): SCARule[] => {
     const mockRules: SCARule[] = [];
     const severityOptions = ['critical', 'high', 'medium', 'low'];

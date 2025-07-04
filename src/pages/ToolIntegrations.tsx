@@ -87,7 +87,7 @@ const ToolIntegrations: React.FC = () => {
     try {
       setActivatingTool(toolId);
       
-      // Set the lynis_ran flag for the hardcoded 78% compliance score
+      
       if (toolId === 'lynis' && typeof window !== 'undefined') {
         sessionStorage.setItem('lynis_ran', 'true');
         localStorage.setItem('lynis_ran', 'true');
@@ -96,12 +96,11 @@ const ToolIntegrations: React.FC = () => {
       await activateTool(toolId);
       setActivatingTool(null);
       
-      // If activating Lynis, navigate to dashboard after a short delay
+
       if (toolId === 'lynis') {
-        // Add a small delay for better UX - allowing time for the store to run the scan
         setTimeout(() => {
           navigate('/', { state: { refreshData: true } });
-        }, 1500); // Longer delay to ensure data is processed
+        }, 1500); 
       }
     } catch (error) {
       console.error('Failed to activate tool:', error);

@@ -101,7 +101,7 @@ const WazuhResult: React.FC = () => {
       
       console.log(`Fetching info for agent ${agentId}...`);
       
-      // Use a fallback approach to handle potential API inconsistencies
+      
       let agentData: any = {
         info: null,
         os: null,

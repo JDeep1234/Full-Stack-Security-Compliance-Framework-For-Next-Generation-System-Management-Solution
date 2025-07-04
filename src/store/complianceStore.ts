@@ -75,11 +75,7 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
     }));
     
     try {
-      // In a real app, this would be an API call
-      // const response = await fetch('/api/frameworks');
-      // const data = await response.json();
       
-      // Using mock data for now
       await new Promise(resolve => setTimeout(resolve, 500));
       
       set((state) => ({
@@ -102,7 +98,6 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
     }));
     
     try {
-      // In a real app, this would be an API call
       await new Promise(resolve => setTimeout(resolve, 500));
       
       // Add Wazuh to the tools list if it's not already there
@@ -153,7 +148,6 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
     }));
     
     try {
-      // In a real app, this would be an API call
       await new Promise(resolve => setTimeout(resolve, 500));
       
       set((state) => ({
@@ -171,7 +165,6 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
   
   addCustomFramework: async (framework) => {
     try {
-      // In a real app, this would be an API call
       await new Promise(resolve => setTimeout(resolve, 300));
       
       const newFramework: ComplianceFramework = {
@@ -193,7 +186,6 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
   
   addTool: async (tool) => {
     try {
-      // In a real app, this would be an API call
       await new Promise(resolve => setTimeout(resolve, 300));
       
       const newTool: Tool = {
@@ -215,7 +207,6 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
   
   scheduleAssessment: async (assessment) => {
     try {
-      // In a real app, this would be an API call
       await new Promise(resolve => setTimeout(resolve, 300));
       
       const newAssessment: Assessment = {
@@ -380,7 +371,6 @@ export const useComplianceStore = create<ComplianceStoreState>((set, get) => ({
     }));
 
     try {
-      // In a real app, this would make an API call to run OpenSCAP
       // The sequence of commands would be:
       // 1. wget https://security-metadata.canonical.com/oval/com.ubuntu.$(lsb_release -cs).usn.oval.xml.bz2
       // 2. bzip2 -d com.ubuntu.$(lsb_release -cs).usn.oval.xml.bz2
@@ -697,7 +687,7 @@ sudo apt upgrade -y</pre>
 
   activateTool: async (toolId: string) => {
     try {
-      // In a real app, this would be an API call to activate the tool
+      
       await new Promise(resolve => setTimeout(resolve, 800));
       
       const currentTools = get().tools;

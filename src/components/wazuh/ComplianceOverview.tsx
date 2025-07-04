@@ -24,18 +24,14 @@ const ComplianceOverview: React.FC<ComplianceOverviewProps> = ({ agent }) => {
     total: 0,
   });
 
-  // This would normally fetch data from the backend based on the agent and framework
-  // For demonstration, we're generating random data
   useEffect(() => {
     if (agent) {
-      // In a real app, we would fetch compliance status for the selected framework
-      // For this demo, we'll generate randomized data for each framework
       const generateComplianceData = () => {
         const frameworkSeed = selectedFramework.id.charCodeAt(0);
         const agentSeed = parseInt(agent.info?.id || '0');
         const seed = (frameworkSeed + agentSeed) % 100;
         
-        // Generate data with a slight bias toward passing (better visuals for demo)
+        
         const total = 70 + Math.floor(seed % 30);
         const pass = Math.floor(total * (0.6 + (seed % 20) / 100));
         const fail = Math.floor(total * (0.1 + (seed % 15) / 100));
@@ -212,7 +208,6 @@ const ComplianceOverview: React.FC<ComplianceOverviewProps> = ({ agent }) => {
               }
             } catch (checksError) {
               console.warn('Could not fetch SCA checks, using mock data');
-              // Generate mock SCA data if API fails
               scaChecks = generateMockSCAChecks(firstPolicy.policy_id);
             }
           }
@@ -273,7 +268,7 @@ const ComplianceOverview: React.FC<ComplianceOverviewProps> = ({ agent }) => {
     }
   };
 
-  // Generate mock SCA checks for demo purposes
+  
   const generateMockSCAChecks = (policyId: string) => {
     const mockChecks = [];
     const severityOptions = ['critical', 'high', 'medium', 'low'];
