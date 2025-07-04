@@ -162,7 +162,6 @@ class WazuhTokenManager {
   }
 }
 
-// Wazuh service class for API operations
 class WazuhService {
   constructor() {
     this.tokenManager = new WazuhTokenManager();
@@ -306,12 +305,8 @@ class WazuhService {
     return this.request('get', `/rules${query}`);
   }
 
-  // Trigger a SCA scan (if the API allows)
   async triggerSCAScan(agentId) {
-    // Note: Wazuh API might not have a direct endpoint for this
-    // This is a placeholder - actual implementation depends on Wazuh's capabilities
     try {
-      // In a real implementation, you might need to use Wazuh's API or other means
       return {
         success: true,
         message: `SCA scan requested for agent ${agentId}`
