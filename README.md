@@ -553,6 +553,12 @@ This framework supports **SSH-based remote server access** for executing securit
 
 *Note: SSH remote access functionality is available in the extended version of this framework.*
 
+> **Note:** For advanced remote node assessment structure, SSH-based security auditing, and detailed operational guidance on Lynis and OpenSCAP integrations, please refer to the `remote-server-monitoring` branch. That branch contains:
+> - In-depth documentation on secure remote compliance scanning
+> - SSH authentication methods and best practices
+> - Example directory structure for remote auditing workflows
+> - Usage instructions for secure, agentless monitoring
+
 ## 🤝 Contributing
 
 We welcome contributions! Please follow these steps:
