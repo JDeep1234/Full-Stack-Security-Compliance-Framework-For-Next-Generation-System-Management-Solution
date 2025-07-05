@@ -1,6 +1,74 @@
-# 🛡️ HPC Security Compliance Framework
+# Full-Stack-Security-Compliance-Framework-For-Next-Generation-System-Management-Solution
 
-A comprehensive, full-stack security compliance monitoring and reporting platform designed specifically for High-Performance Computing (HPC) environments. This framework integrates multiple security tools and provides real-time monitoring, compliance assessment, and detailed reporting capabilities.
+> **Enterprise-Ready Security, Compliance, and Risk Intelligence for Modern HPC, Cloud, and Hybrid Environments**
+
+In today’s digital landscape, security compliance is critical for protecting sensitive data and ensuring resilient infrastructure. This project delivers a unified Full Stack Security Compliance Framework that automates assessment, monitoring, and remediation across domains like healthcare, banking, defense, and quantum systems.
+
+By integrating Wazuh, Lynis, and OpenSCAP into a centralized pipeline, the framework provides real-time insights, structured reporting, and intelligent remediation. The Model Context Protocol (MCP) engine, enhanced by a Groq LLM, transforms raw alerts into actionable, context-aware recommendations aligned with standards such as CIS.
+
+Key features include secure SSH-based scans, automated data collection, interactive dashboards, and flexible reporting—supporting both industry and custom compliance frameworks. The solution is modular, scalable, and designed for zero-downtime updates, addressing both current and next-generation cybersecurity needs.
+
+---
+
+This repository delivers a modular, production-grade platform for continuous security monitoring, compliance assessment, and actionable reporting. Designed for research labs, enterprise clusters, and distributed edge deployments, it unifies:
+
+- A modern React + TypeScript frontend (Vite, Tailwind CSS, Zustand, Recharts, Lucide React)
+- A robust Node.js/Express backend with seamless Wazuh, Lynis, and OpenSCAP integrations
+- Real-time dashboards, multi-framework compliance, and automated regulatory reporting
+- Sector-specific research, professional documentation, and ready-to-use configuration
+
+**Directory Overview:**
+- `src/` — Frontend application and UI components
+- `server/` — Backend API, security tool integrations, and persistent data storage
+- `research/` — Industry compliance research and sector analysis
+- `Documentation/` — Project reports and presentations
+- `public/` — Static assets
+- Configuration files for code quality, build, and type safety
+
+This framework is extensible, audit-ready, and engineered for operational excellence—empowering organizations to stay compliant, resilient, and proactive in the face of evolving threats.
+
+_Not just compliant. Audit-ready. Attack-resistant. Smart-driven._
+
+A real-time risk intelligence system that integrates top tools — **Wazuh**, **OpenSCAP**, and **Lynis** — to monitor every endpoint, node, and remote asset. But it goes beyond alerting.
+
+## 🌐 Lynis & OpenSCAP: Remote Node Assessment via SSH
+For systems where agents aren’t viable — edge nodes, satellites, or isolated HPC clusters — we use:
+- **Lynis** for remote auditing over SSH (configurations, permissions, kernel settings)
+- **OpenSCAP** for SCAP-compliant scans across remote environments
+
+✅ These tools ensure even SSH-only assets stay compliant and auditable — no local install needed.
+
+## 🛡 Wazuh: Server-Level Monitoring
+Wazuh is deployed on each compute node or critical server. It provides:
+- Real-time intrusion detection
+- File integrity monitoring
+- Behavioral alerts at the system level
+- Continuous log analysis from core services
+
+✅ Perfect for tracking live threats, unauthorized changes, or runtime anomalies on local infrastructure.
+
+## 🧠 MCP Protocol Engine: Context-Aware Risk Intelligence
+At the heart is **MCP** — our Model Context Protocol — a smart engine that takes noisy alerts and transforms them into prioritized, context-aware risks mapped directly to frameworks like NIST, ISO 27001, SOC2, and more.
+
+We use top-tier tools – Wazuh, OpenSCAP, and Lynis – to continuously monitor your HPC compute nodes and remote systems. They generate JSON-based logs that feed into a central API and Local Database, where they are normalized and stored.
+
+The real shift happens with our MCP Protocol Engine:
+- Adds context to raw logs
+- Applies risk scoring based on CVSS + asset value
+- Maps them to compliance frameworks (NIST, ISO, HIPAA, etc.)
+- Validates every output before triggering actions
+- Instantly flags high-risk logins, enforces MFA, and blocks attackers from exploiting leaked credentials (like the ones seen in the recent 16 billion password leak affecting Google, Apple, and more)
+- Supports zero-downtime updates, so security never pauses
+
+## 📊 Actionable Intelligence & Outputs
+Finally, we surface this intelligence through:
+- Interactive dashboards
+- Regulatory reports
+- Actionable outputs – such as triggering auto-remediation or alerting CISOs
+
+---
+
+Below you’ll find a detailed breakdown of features, architecture, setup, and operational guidance for the platform.
 
 ## 🌟 Key Features
 
@@ -211,8 +279,8 @@ HPE-CTY-Project/
 │   │   │       ├── SystemInformation.tsx  # System information display
 │   │   │       └── *.json                 # Sample data files
 │   │   │
-│   │   ├── data/                          # Static data and mock data
-│   │   │   └── mockData.ts                # Mock data for development
+│   │   ├── data/                          # Application data and configurations
+│   │   │   └── dataStore/                 # Static data and development datasets
 │   │   │
 │   │   ├── pages/                         # Page components
 │   │   │   ├── Dashboard.tsx              # Main dashboard page
@@ -352,33 +420,49 @@ GET    /api/tools/lynis/status            # Check scan status
 GET    /api/health                        # System health check
 ```
 
-## 🛠️ Development
+## 🧪 Testing
 
-### Available Scripts
-
+### Unit Testing
 ```bash
-npm run dev          # Start frontend development server
-npm run build        # Build frontend for production
-npm run preview      # Preview production build
-npm run lint         # Run ESLint
-npm run server       # Start backend server
-npm run dev:all      # Start both frontend and backend
+npm run test        # Run unit tests
+npm run test:watch  # Run tests in watch mode
+npm run test:coverage # Generate coverage report
 ```
 
-### Backend Scripts
+### Integration Testing
+- End-to-end tests with Cypress
+- API integration tests
+- Security tool integration validation
 
+### Performance Testing
+- Load testing with k6
+- Response time benchmarking
+- Resource utilization monitoring
+
+## 📦 Deployment Best Practices
+
+### Container Deployment
 ```bash
-cd server
-npm start           # Start production server
-npm run dev         # Start development server with nodemon
+# Build Docker image
+docker build -t hpc-security-framework .
+
+# Run container
+docker run -p 80:3001 hpc-security-framework
 ```
 
-### Environment Configuration
+### Production Checklist
+- [ ] Environment variables configured
+- [ ] SSL certificates installed
+- [ ] Database backups configured
+- [ ] Monitoring tools setup
+- [ ] Rate limiting enabled
+- [ ] Security headers configured
 
-The application uses environment-based configuration:
-
-- **Development**: Frontend on port 5173, Backend on port 3001
-- **Production**: Configurable ports via environment variables
+### Scaling Considerations
+- Horizontal scaling with load balancers
+- Redis caching for API responses
+- Database connection pooling
+- Static asset CDN distribution
 
 ## 🔒 Security Considerations
 
@@ -396,6 +480,36 @@ The application uses environment-based configuration:
 - No sensitive data stored in frontend
 - Secure API communication
 - Proper error handling without data leakage
+
+## 🛡️ Enhanced Security Measures
+
+### API Security
+- Rate limiting per endpoint
+- Request validation middleware
+- SQL injection prevention
+- XSS protection headers
+- CSRF token validation
+
+### Data Protection
+- AES-256 encryption for sensitive data
+- Regular security audits
+- Automated vulnerability scanning
+- Security patch management
+- Data backup encryption
+
+### Access Control
+- Role-based access control (RBAC)
+- IP whitelisting options
+- Session management
+- Audit logging
+- Failed login attempt monitoring
+
+### Compliance Monitoring
+- Real-time compliance checks
+- Automated compliance reporting
+- Policy violation alerts
+- Regulatory requirement tracking
+- Compliance score trending
 
 ## 🚨 Troubleshooting
 
@@ -456,4 +570,4 @@ This project is licensed under the **MIT License** - see the LICENSE file for de
 
 ---
 
-For support, feature requests, or bug reports, please open an issue in the repository. 
+For support, feature requests, or bug reports, please open an issue in the repository.
