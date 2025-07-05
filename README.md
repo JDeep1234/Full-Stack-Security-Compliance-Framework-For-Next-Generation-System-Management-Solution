@@ -1,6 +1,12 @@
+
 # Lynis and OpenSCAP: Leveraging SSH for Secure Transmission
 
 This README outlines how Lynis and OpenSCAP, two powerful security tools, interact with SSH to ensure secure auditing and remote system scanning. While both contribute to system security, their use of SSH differs significantly.
+
+> **Note:** This branch includes extended documentation and directory structure specifically for Lynis and OpenSCAP SSH-based secure auditing and remote scanning. Refer to the `README.md` in this branch for in-depth details on:
+> - How Lynis and OpenSCAP leverage SSH for secure transmission and remote compliance
+> - SSH authentication methods supported by the platform
+> - Example directory structure and operational guidance for these integrations
 
 ## Lynis: Auditing SSH Configuration for Secure Hardening
 
@@ -42,9 +48,9 @@ In summary, OpenSCAP's `oscap-ssh` is designed to provide end-to-end secure comm
 
 Both Lynis and OpenSCAP are valuable tools in a robust security strategy. Lynis helps harden individual system configurations, including SSH, from within, while OpenSCAP extends auditing capabilities to remote systems securely via SSH for comprehensive compliance and vulnerability management.
 
-# SSH Authentication in Wazuh-Isolated: Connecting to Remote Systems
+# SSH Authentication for connecting to Remote Systems
 
-This document explains the various SSH authentication methods available in the Wazuh-Isolated application for connecting to remote systems, primarily for Lynis and OpenSCAP operations. Understanding these methods is crucial for ensuring secure and efficient remote management.
+The various SSH authentication methods available for connecting to remote systems, primarily for Lynis and OpenSCAP operations. Understanding these methods is crucial for ensuring secure and efficient remote management.
 
 ## Overview of SSH Authentication Methods
 
@@ -120,4 +126,33 @@ The application's backend (`server.js` and `server/services/sshService.js`) inte
 *   **Use Strong Passphrases:** If you set a passphrase for your private keys, ensure it's strong and unique. This provides an additional layer of protection if your private key file is ever compromised.
 *   **Least Privilege:** Configure the SSH user on the remote server with the minimum necessary privileges. Use `sudo` for commands requiring elevated permissions, and configure passwordless `sudo` if possible to avoid transmitting the `sudo` password repeatedly.
 
-By understanding and utilizing these secure SSH authentication methods, you can ensure that your remote Lynis and OpenSCAP operations are performed with the highest level of security. 
+By understanding and utilizing these secure SSH authentication methods, you can ensure that your remote Lynis and OpenSCAP operations are performed with the highest level of security.
+
+---
+
+## 📁 Directory Structure for Lynis & OpenSCAP SSH Integration
+
+This branch is organized to provide clear separation of concerns and ease of navigation for SSH-based security auditing and compliance:
+
+```
+lyn-openscap-ssh/
+├── README.md                # Detailed documentation for SSH-based auditing and authentication
+├── lynis/
+│   ├── lynis-audit.sh       # Script for running Lynis audits via SSH
+│   ├── lynis-config/        # Example Lynis configuration files
+│   └── reports/             # Output reports from Lynis scans
+├── openscap/
+│   ├── oscap-ssh-wrapper.sh # Script for OpenSCAP remote scans using oscap-ssh
+│   ├── scap-content/        # SCAP content (XCCDF, OVAL, etc.) for compliance checks
+│   └── reports/             # Output reports from OpenSCAP scans
+├── ssh/
+│   ├── sshService.js        # Node.js service for managing SSH connections and authentication
+│   ├── keygen-utils.js      # Utilities for SSH key generation and deployment
+│   └── config-examples/     # Example SSH configuration and deployment scripts
+└── utils/
+    └── helpers.js           # Shared utility functions for reporting, parsing, etc.
+```
+
+- All scripts and configuration files are modular and can be adapted for different environments.
+- Reports are stored in dedicated subfolders for easy access and review.
+- SSH authentication logic is centralized for maintainability and security.
