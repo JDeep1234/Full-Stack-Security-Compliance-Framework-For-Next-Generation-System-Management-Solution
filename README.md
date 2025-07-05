@@ -124,6 +124,14 @@ Below you’ll find a detailed breakdown of features, architecture, setup, and o
 - **Lynis**: Local system security auditing
 - **OpenSCAP**: Compliance and vulnerability scanning
 
+## 🎥 Video Demonstrations
+
+
+
+```html
+<iframe width="640" height="360" src="https://drive.google.com/file/d/13bIrLLPbmdG6oOpixUMG9gyMAFgILcJ_/view?usp=drive_link" title="Demo Video" frameborder="0" allowfullscreen></iframe>
+```
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -577,3 +585,6 @@ This project is licensed under the **MIT License** - see the LICENSE file for de
 ---
 
 For support, feature requests, or bug reports, please open an issue in the repository.
+
+---
+
