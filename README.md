@@ -124,6 +124,9 @@ Below you’ll find a detailed breakdown of features, architecture, setup, and o
 - **Lynis**: Local system security auditing
 - **OpenSCAP**: Compliance and vulnerability scanning
 
+## 🎥 Video Demonstrations
+
+https://github.com/user-attachments/assets/37a67353-ab5f-48ac-8869-6463ccd588b1
 
 
 ## 🚀 Quick Start
