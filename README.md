@@ -126,9 +126,7 @@ Below you’ll find a detailed breakdown of features, architecture, setup, and o
 
 ## 🎥 Video Demonstrations
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/37a67353-ab5f-48ac-8869-6463ccd588b1" alt="DEMO" width="600"/>
-</p>
+https://github.com/user-attachments/assets/37a67353-ab5f-48ac-8869-6463ccd588b1
 
 
 
