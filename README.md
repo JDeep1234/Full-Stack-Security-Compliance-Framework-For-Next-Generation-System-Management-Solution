@@ -9,7 +9,7 @@ By integrating Wazuh, Lynis, and OpenSCAP into a centralized pipeline, the frame
 Key features include secure SSH-based scans, automated data collection, interactive dashboards, and flexible reporting—supporting both industry and custom compliance frameworks. The solution is modular, scalable, and designed for zero-downtime updates, addressing both current and next-generation cybersecurity needs.
 
 ---
-<img width="2146" height="950" alt="image" src="https://github.com/user-attachments/assets/9db7e76a-da4d-4485-9f1f-9f3a63615588" />
+
 
 This repository delivers a modular, production-grade platform for continuous security monitoring, compliance assessment, and actionable reporting. Designed for research labs, enterprise clusters, and distributed edge deployments, it unifies:
 
@@ -587,5 +587,6 @@ This project is licensed under the **MIT License** - see the LICENSE file for de
 For support, feature requests, or bug reports, please open an issue in the repository.
 
 ---
+
 
 
